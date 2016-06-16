@@ -8,4 +8,4 @@ http.createServer(function (request, response) {
 
     // 发送响应数据 "Hello World"
     response.end('Hello World\n');
-}).listen(80);
+}).listen(8080);
