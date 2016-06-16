@@ -4,7 +4,7 @@ export class Cpu {
     public pc:number;
 
     public V:Array<number>;
-    public I:number
+    public I:number;
 
     public memory:ArrayBuffer;
 
@@ -21,7 +21,29 @@ export class Cpu {
     //清理内存
 
     constructor() {
+        this.I = 0;
         this.memory = new ArrayBuffer(4096);
+        let chip8_fontset:Array<number> = [
+            0xF0, 0x90, 0x90, 0x90, 0xF0, //0
+            0x20, 0x60, 0x20, 0x20, 0x70, //1
+            0xF0, 0x10, 0xF0, 0x80, 0xF0, //2
+            0xF0, 0x10, 0xF0, 0x10, 0xF0, //3
+            0x90, 0x90, 0xF0, 0x10, 0x10, //4
+            0xF0, 0x80, 0xF0, 0x10, 0xF0, //5
+            0xF0, 0x80, 0xF0, 0x90, 0xF0, //6
+            0xF0, 0x10, 0x20, 0x40, 0x40, //7
+            0xF0, 0x90, 0xF0, 0x90, 0xF0, //8
+            0xF0, 0x90, 0xF0, 0x10, 0xF0, //9
+            0xF0, 0x90, 0xF0, 0x90, 0x90, //A
+            0xE0, 0x90, 0xE0, 0x90, 0xE0, //B
+            0xF0, 0x80, 0x80, 0x80, 0xF0, //C
+            0xE0, 0x90, 0x90, 0x90, 0xE0, //D
+            0xF0, 0x80, 0xF0, 0x80, 0xF0, //E
+            0xF0, 0x80, 0xF0, 0x80, 0x80];
+        for (let i = 0; i < chip8_fontset.length; i++) {
+            this.memory[i] = chip8_fontset[i];
+        }
+
         this.display = new Display();
         this.V = [];
         this.stack = [];
@@ -57,7 +79,8 @@ export class Cpu {
                 _this.delaytimer--;
             }
             System.run_num++;
-        }, 1000 / 60);
+            System.print(_this.V);
+        }, 1000);
 
 
     }
@@ -218,11 +241,11 @@ export class Cpu {
             let height = code & 0x000F;
             cpu.V[15] = 0;
 
-            let map = [];
+            let map = cpu.display.get();
 
-            for (let yline = 0; yline < height; yline++) {
+            for (var yline = 0; yline < height; yline++) {
                 var pixel = cpu.memory[cpu.I + yline];
-                for (let xline = 0; xline < 8; xline++) {
+                for (var xline = 0; xline < 8; xline++) {
                     if ((pixel & (0x80 >> xline)) != 0) {
                         if (map[(x + xline + ((y + yline) * 64))] == 1) {
                             cpu.V[0xF] = 1;

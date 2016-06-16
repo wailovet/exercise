@@ -5,9 +5,38 @@
     <title>Title</title>
 </head>
 <body>
-
+<canvas id="myCanvas" width="640" height="320"></canvas>
 </body>
-<!--<script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>-->
+<script>
+
+    var c = document.getElementById("myCanvas");
+    var cxt = c.getContext("2d");
+
+    cxt.fillStyle = "#000000";
+    cxt.fillRect(0, 0, 640, 320);
+    window.Canvasdata = function (data) {
+
+
+        for (var k = 0; k < 32; k++) {
+            for (var i = 0; i < 64; i++) {
+                if (data[k * 64 + i] == 1) {
+                    cxt.fillStyle = "#FFFFFF";
+                    cxt.fillRect(i * 10, k * 10, 10, 10);
+                } else {
+                    cxt.fillStyle = "#000000";
+                    cxt.fillRect(i * 10, k * 10, 10, 10);
+                }
+            }
+        }
+
+
+    };
+    window.Canvasclean = function () {
+
+        cxt.fillStyle = "#000000";
+        cxt.fillRect(0, 0, 640, 320);
+    }
+</script>
 <script src="./i.js"></script>
 
 </html>
