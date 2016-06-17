@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="800" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+</body>
+<script src="Canvas.js"></script>
+<script>
+
+    var c = document.getElementById("myCanvas");
+    canvas = new Canvas(c);
+
+    var lines = [];
+    var i = 500;
+    while (i--) {
+        lines.push(canvas.addLine({
+            x: System.rand(0, 800),
+            y: System.rand(0, 800)
+        }, {
+            x: System.rand(0, 800),
+            y: System.rand(0, 800)
+        }));
+    }
+
+    canvas.autoUpdate(20);
+
+    function move() {
+        for (var i in lines) {
+            var callback = null;
+            if (i >= lines.length - 1) {
+                callback = function () {
+                    move();
+                }
+            }
+            canvas.getLine(lines[i]).move(
+                    {x: System.rand(0, 800), y: System.rand(0, 800)},
+                    {x: System.rand(0, 800), y: System.rand(0, 800)},
+                    1000, callback
+            );
+
+        }
+    }
+    move();
+
+
+</script>
+</html>
