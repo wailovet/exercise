@@ -24,11 +24,15 @@ class DoubleBufferedCanvas {
 
             //this.origin_canvas.getContext("2d").stroke();
             this.write();
-        }
+
+        };
     }
 
 
     private write() {
+
+        //console.log(md5(this.clone_canvas.getContext("2d").getImageData(0,0,100,100).data));
+        //console.log((this.clone_canvas.getContext("2d").getImageData(0,0,100,100)).data);
         //this.origin_canvas.getContext("2d").clearRect(0,0,this.clone_canvas.width,this.clone_canvas.height);
         //this.origin_canvas.getContext("2d").drawImage(this.clone_canvas,0,0,this.clone_canvas.width,this.clone_canvas.height);
     }

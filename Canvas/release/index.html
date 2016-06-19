@@ -9,6 +9,7 @@
     Your browser does not support the HTML5 canvas tag.
 </canvas>
 </body>
+<script src="../js/md5.js"></script>
 <script src="Canvas.js"></script>
 <script>
 
@@ -16,7 +17,7 @@
     canvas = new Canvas(c);
 
     var lines = [];
-    var i = 8000;
+    var i = 5000;
     while (i--) {
         lines.push(canvas.addLine({
             x: System.rand(0, 1200),
