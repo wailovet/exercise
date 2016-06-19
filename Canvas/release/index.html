@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<canvas id="myCanvas" width="800" height="800" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="1200" height="1200" style="border:1px solid #d3d3d3;">
     Your browser does not support the HTML5 canvas tag.
 </canvas>
 </body>
@@ -16,14 +16,14 @@
     canvas = new Canvas(c);
 
     var lines = [];
-    var i = 500;
+    var i = 8000;
     while (i--) {
         lines.push(canvas.addLine({
-            x: System.rand(0, 800),
-            y: System.rand(0, 800)
+            x: System.rand(0, 1200),
+            y: System.rand(0, 1200)
         }, {
-            x: System.rand(0, 800),
-            y: System.rand(0, 800)
+            x: System.rand(0, 1200),
+            y: System.rand(0, 1200)
         }));
     }
 
@@ -38,8 +38,8 @@
                 }
             }
             canvas.getLine(lines[i]).move(
-                    {x: System.rand(0, 800), y: System.rand(0, 800)},
-                    {x: System.rand(0, 800), y: System.rand(0, 800)},
+                    {x: System.rand(0, 1200), y: System.rand(0, 1200)},
+                    {x: System.rand(0, 1200), y: System.rand(0, 1200)},
                     1000, callback
             );
 

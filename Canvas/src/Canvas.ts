@@ -6,8 +6,9 @@ class Canvas {
     private context:CanvasRenderingContext2D;
 
     constructor(canvas:HTMLCanvasElement) {
-        this.canvas_element = canvas;
-        this.context = canvas.getContext("2d");
+        let doubleBufferedCanvas = new DoubleBufferedCanvas(canvas)
+        this.canvas_element = doubleBufferedCanvas.getCanvas();
+        this.context = this.canvas_element.getContext("2d");
         this.lines = [];
     }
 

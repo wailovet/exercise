@@ -18,8 +18,9 @@ var Base = (function () {
 var Canvas = (function () {
     function Canvas(canvas) {
         this.update_id = 0;
-        this.canvas_element = canvas;
-        this.context = canvas.getContext("2d");
+        var doubleBufferedCanvas = new DoubleBufferedCanvas(canvas);
+        this.canvas_element = doubleBufferedCanvas.getCanvas();
+        this.context = this.canvas_element.getContext("2d");
         this.lines = [];
     }
     Canvas.prototype.addLine = function (start, end) {
@@ -70,6 +71,33 @@ var Canvas = (function () {
         ctx.stroke();
     };
     return Canvas;
+})();
+var DoubleBufferedCanvas = (function () {
+    function DoubleBufferedCanvas(canvas) {
+        var _this = this;
+        this.hash = {};
+        this.origin_canvas = canvas;
+        this.clone_canvas = document.createElement("canvas");
+        this.clone_canvas.width = canvas.width;
+        this.clone_canvas.height = canvas.height;
+        var content = this.clone_canvas.getContext("2d");
+        content._stroke = content.stroke;
+        content.stroke = function () {
+            content.clearRect(0, 0, _this.clone_canvas.width, _this.clone_canvas.height);
+            console.log("content.stroke");
+            content._stroke();
+            //this.origin_canvas.getContext("2d").stroke();
+            _this.write();
+        };
+    }
+    DoubleBufferedCanvas.prototype.write = function () {
+        //this.origin_canvas.getContext("2d").clearRect(0,0,this.clone_canvas.width,this.clone_canvas.height);
+        //this.origin_canvas.getContext("2d").drawImage(this.clone_canvas,0,0,this.clone_canvas.width,this.clone_canvas.height);
+    };
+    DoubleBufferedCanvas.prototype.getCanvas = function () {
+        return this.clone_canvas;
+    };
+    return DoubleBufferedCanvas;
 })();
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
