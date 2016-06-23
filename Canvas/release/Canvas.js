@@ -91,6 +91,11 @@ var DoubleBufferedCanvas = (function () {
         };
     }
     DoubleBufferedCanvas.prototype.write = function () {
+        var write_map = this.cutting();
+        for (var i = 0; i < write_map.length; i++) {
+            var map = write_map[i];
+            this.origin_canvas.getContext("2d").drawImage(this.clone_canvas, map.x, map.y, 100, 100, map.x, map.y, 100, 100);
+        }
         //console.log(md5(this.clone_canvas.getContext("2d").getImageData(0,0,100,100).data));
         //console.log((this.clone_canvas.getContext("2d").getImageData(0,0,100,100)).data);
         //this.origin_canvas.getContext("2d").clearRect(0,0,this.clone_canvas.width,this.clone_canvas.height);
@@ -98,6 +103,30 @@ var DoubleBufferedCanvas = (function () {
     };
     DoubleBufferedCanvas.prototype.getCanvas = function () {
         return this.clone_canvas;
+    };
+    DoubleBufferedCanvas.prototype.cutting = function () {
+        var width = this.clone_canvas.width;
+        var height = this.clone_canvas.height;
+        var ret = [];
+        for (var y = 0; y < height; y += height / 2) {
+            for (var x = 0; x < width; x += width / 2) {
+                if (!this.hash[y * width + x]) {
+                    this.hash[y * width + x] = "0";
+                }
+                else {
+                    var data = this.clone_canvas.getContext("2d").getImageData(x, y, height / 2, width / 2).data;
+                    var md5_data = md5(data);
+                    if (md5_data != this.hash[y * width + x]) {
+                        this.hash[y * width + x] = md5_data;
+                        ret.push({ x: x, y: y });
+                    }
+                    else {
+                        console.log(y + "|" + x);
+                    }
+                }
+            }
+        }
+        return ret;
     };
     return DoubleBufferedCanvas;
 })();
