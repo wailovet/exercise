@@ -12,6 +12,10 @@ class V3DMesh {
         this.babylon_name = name;
     }
 
+    public collisions(is_check:boolean) {
+        this.babylon_mesh.checkCollisions = is_check;
+    }
+
     public setPosition(position:{x:number,y:number,z:number}) {
         this.babylon_mesh.position.x = position.x;
         this.babylon_mesh.position.y = position.y;
@@ -32,6 +36,30 @@ class V3DMesh {
         Z: "z",
     };
 
+
+    public move(orientation:string, value:number, framePerSecond?:number, callback?:() => void) {
+        if (!framePerSecond) {
+            this.babylon_mesh.position[orientation] = value;
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+
+
+        this.animation("position." + orientation, this.babylon_mesh.position[orientation], value, framePerSecond);
+
+        return this.babylon_scene.beginAnimation(this.babylon_mesh, 0, 100, false, 1, ()=> {
+            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations);
+
+            this.babylon_scene.getMeshByName(this.babylon_name).animations = [];
+            this.move(orientation, value, null, callback);
+        });
+
+
+    }
+
+
     public rotation(orientation:string, value:number, framePerSecond?:number, callback?:() => void) {
         if (!framePerSecond) {
             this.babylon_mesh.rotation[orientation] = value;
@@ -40,24 +68,30 @@ class V3DMesh {
             }
             return;
         }
-        var animation = new V3DAnimation("animation" + System.rand(0, 10000000).toString(), "rotation." + orientation, framePerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-        let keys = [];
-        keys.push({
-            frame: 0,
-            value: this.babylon_mesh.rotation[orientation]
-        });
-        keys.push({
-            frame: 100,
-            value: value
-        });
-        animation.setKeys(keys);
-        this.babylon_mesh.animations.push(animation);
+
+        this.animation("rotation." + orientation, this.babylon_mesh.rotation[orientation], value, framePerSecond);
+
         return this.babylon_scene.beginAnimation(this.babylon_mesh, 0, 100, false, 1, ()=> {
-            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations );
+            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations);
 
             this.babylon_scene.getMeshByName(this.babylon_name).animations = [];
             this.rotation(orientation, value, null, callback);
         });
 
+    }
+
+    public animation(attr_name:string, start_val:number, end_val:number, framePerSecond?:number) {
+        var animation = new V3DAnimation("animation" + System.rand(0, 10000000).toString(), attr_name, framePerSecond, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        let keys = [];
+        keys.push({
+            frame: 0,
+            value: start_val
+        });
+        keys.push({
+            frame: 100,
+            value: end_val
+        });
+        animation.setKeys(keys);
+        this.babylon_mesh.animations.push(animation);
     }
 }

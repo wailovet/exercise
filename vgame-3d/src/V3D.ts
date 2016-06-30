@@ -38,22 +38,14 @@ class V3D {
     }
 
 
-
-
     public addBox(position:{x:number,y:number,z:number}, size:{height:number,width:number,depth:number}, file?) {
         var box = new V3DBox(this.scene, size);
         box.setPosition(position);
-        if(file){
+        if (file) {
             box.setImg(file);
         }
         return box;
     }
-
-
-
-
-
-
 
 
     public setGround(width:number, height:number, subdivisions:number, file?) {
@@ -64,7 +56,7 @@ class V3D {
             material.diffuseTexture = new BABYLON.Texture(file, this.scene);
             cg.material = material;
         }
-
+        return cg;
     }
 
 
