@@ -13,6 +13,7 @@ class V3D {
     //private camera:TargetCamera;
     private camera:FreeCamera;
     private light:HemisphericLight;
+    private ground:Mesh;
 
     constructor(node:HTMLCanvasElement) {
         this.engine = new BABYLON.Engine(node, true);
@@ -35,25 +36,38 @@ class V3D {
         window.addEventListener('resize', () => {
             this.engine.resize();
         });
+
+
     }
 
 
+    public enablePhysics() {
+        this.scene.enablePhysics(null,new BABYLON.CannonJSPlugin());
+        this.ground.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
+            mass: 0,
+            friction: 0,
+            restitution: 0
+        });
+    }
 
 
     public addBox(position:{x:number,y:number,z:number}, size:{height:number,width:number,depth:number}, file?) {
         var box = new V3DBox(this.scene, size);
         box.setPosition(position);
-        if(file){
+        if (file) {
             box.setImg(file);
         }
         return box;
     }
 
-
-
-
-
-
+    public addPlane(position:{x:number,y:number,z:number}, size:{height:number,width:number}, file?) {
+        var box = new V3DPlane(this.scene, size);
+        box.setPosition(position);
+        if (file) {
+            box.setImg(file);
+        }
+        return box;
+    }
 
 
     public setGround(width:number, height:number, subdivisions:number, file?) {
@@ -64,6 +78,7 @@ class V3D {
             material.diffuseTexture = new BABYLON.Texture(file, this.scene);
             cg.material = material;
         }
+        this.ground = cg;
 
     }
 

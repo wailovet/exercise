@@ -12,6 +12,24 @@ class V3DMesh {
         this.babylon_name = name;
     }
 
+
+    public enablePhysics(mass:number = 1, friction:number = 0.1, restitution:number = 0) {
+        this.babylon_mesh.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
+            mass: mass,
+            friction: friction,
+            restitution: restitution
+        });
+
+    }
+    public pausePhysics() {
+        this.babylon_mesh.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
+            mass: 0,
+            friction: 0,
+            restitution: 0
+        });
+
+    }
+
     public setPosition(position:{x:number,y:number,z:number}) {
         this.babylon_mesh.position.x = position.x;
         this.babylon_mesh.position.y = position.y;
@@ -22,6 +40,7 @@ class V3DMesh {
         let material = new BABYLON.StandardMaterial("texturePlane" + System.rand(0, 10000000).toString(), this.babylon_scene);
         material.diffuseTexture = new BABYLON.Texture(file, this.babylon_scene);
         material.diffuseTexture.hasAlpha = true;
+        material.diffuseTexture.coordinatesMode = 4;
         this.babylon_mesh.material = material;
     }
 
@@ -53,7 +72,7 @@ class V3DMesh {
         animation.setKeys(keys);
         this.babylon_mesh.animations.push(animation);
         return this.babylon_scene.beginAnimation(this.babylon_mesh, 0, 100, false, 1, ()=> {
-            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations );
+            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations);
 
             this.babylon_scene.getMeshByName(this.babylon_name).animations = [];
             this.rotation(orientation, value, null, callback);
