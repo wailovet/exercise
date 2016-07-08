@@ -21,9 +21,11 @@ box.rotation(V3DMesh.ORIENTATION.X, Math.PI / 2);
 
 document.onmousedown = function(){
     box.babylon_mesh.position.y += 30;
+    v3d.enablePhysics()
 };
 document.onmouseup = function(){
 
+    box.enablePhysics(100,1,0);
 };
 
 

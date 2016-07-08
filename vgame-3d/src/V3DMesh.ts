@@ -20,15 +20,16 @@ class V3DMesh {
             restitution: restitution
         });
 
-    }
-    public pausePhysics() {
-        this.babylon_mesh.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
-            mass: 0,
-            friction: 0,
-            restitution: 0
+        V3D.physics_state_array.push({
+            obj: this.babylon_mesh,
+            options: {
+                mass: mass,
+                friction: friction,
+                restitution: restitution
+            }
         });
-
     }
+
 
     public collisions(is_check:boolean) {
         this.babylon_mesh.checkCollisions = is_check;
@@ -53,6 +54,30 @@ class V3DMesh {
         Y: "y",
         Z: "z",
     };
+
+
+    public move(orientation:string, value:number, framePerSecond?:number, callback?:() => void) {
+        if (!framePerSecond) {
+            this.babylon_mesh.position[orientation] = value;
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+
+
+        this.animation("position." + orientation, this.babylon_mesh.position[orientation], value, framePerSecond);
+
+        return this.babylon_scene.beginAnimation(this.babylon_mesh, 0, 100, false, 1, ()=> {
+            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations);
+
+            this.babylon_scene.getMeshByName(this.babylon_name).animations = [];
+            this.move(orientation, value, null, callback);
+        });
+
+
+    }
+
 
     public rotation(orientation:string, value:number, framePerSecond?:number, callback?:() => void) {
         if (!framePerSecond) {
@@ -79,20 +104,13 @@ class V3DMesh {
         let keys = [];
         keys.push({
             frame: 0,
-            value: this.babylon_mesh.rotation[orientation]
+            value: start_val
         });
         keys.push({
             frame: 100,
-            value: value
+            value: end_val
         });
         animation.setKeys(keys);
         this.babylon_mesh.animations.push(animation);
-        return this.babylon_scene.beginAnimation(this.babylon_mesh, 0, 100, false, 1, ()=> {
-            console.log(this.babylon_scene.getMeshByName(this.babylon_name).animations);
-
-            this.babylon_scene.getMeshByName(this.babylon_name).animations = [];
-            this.rotation(orientation, value, null, callback);
-        });
-
     }
 }

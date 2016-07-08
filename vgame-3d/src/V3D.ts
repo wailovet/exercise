@@ -4,6 +4,7 @@ import TargetCamera = BABYLON.TargetCamera;
 import FreeCamera = BABYLON.FreeCamera;
 import HemisphericLight = BABYLON.HemisphericLight;
 import Mesh = BABYLON.Mesh;
+import PhysicsBodyCreationOptions = BABYLON.PhysicsBodyCreationOptions;
 
 
 class V3D {
@@ -13,6 +14,7 @@ class V3D {
     //private camera:TargetCamera;
     private camera:FreeCamera;
     private light:HemisphericLight;
+    private ground:Mesh;
 
     constructor(node:HTMLCanvasElement) {
         this.engine = new BABYLON.Engine(node, true);
@@ -38,13 +40,37 @@ class V3D {
     }
 
 
+    private is_physics_init:boolean = false;
+    public static physics_state_array:Array<{obj:Mesh,options:PhysicsBodyCreationOptions}> = [];
+
     public enablePhysics() {
-        this.scene.enablePhysics(null,new BABYLON.CannonJSPlugin());
-        this.ground.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
-            mass: 0,
-            friction: 0,
-            restitution: 0
-        });
+        if (!this.is_physics_init) {
+            this.scene.enablePhysics(null, new BABYLON.CannonJSPlugin());
+            this.ground.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
+                mass: 0,
+                friction: 0,
+                restitution: 0
+            });
+            V3D.physics_state_array.push({
+                obj: this.ground,
+                options: {
+                    mass: 0,
+                    friction: 0,
+                    restitution: 0
+                }
+            });
+            this.is_physics_init = true;
+            return;
+        }
+        for (var i in V3D.physics_state_array) {
+            if (V3D.physics_state_array[i].obj) {
+                V3D.physics_state_array[i].obj.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, V3D.physics_state_array[i].options);
+            }
+        }
+    }
+
+    public pausePhysics() {
+        this.scene.disablePhysicsEngine();
     }
 
 
