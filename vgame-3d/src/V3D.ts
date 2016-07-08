@@ -38,8 +38,27 @@ class V3D {
     }
 
 
+    public enablePhysics() {
+        this.scene.enablePhysics(null,new BABYLON.CannonJSPlugin());
+        this.ground.setPhysicsState(BABYLON.PhysicsEngine.SphereImpostor, {
+            mass: 0,
+            friction: 0,
+            restitution: 0
+        });
+    }
+
+
     public addBox(position:{x:number,y:number,z:number}, size:{height:number,width:number,depth:number}, file?) {
         var box = new V3DBox(this.scene, size);
+        box.setPosition(position);
+        if (file) {
+            box.setImg(file);
+        }
+        return box;
+    }
+
+    public addPlane(position:{x:number,y:number,z:number}, size:{height:number,width:number}, file?) {
+        var box = new V3DPlane(this.scene, size);
         box.setPosition(position);
         if (file) {
             box.setImg(file);
@@ -56,6 +75,8 @@ class V3D {
             material.diffuseTexture = new BABYLON.Texture(file, this.scene);
             cg.material = material;
         }
+        this.ground = cg;
+
         return cg;
     }
 
