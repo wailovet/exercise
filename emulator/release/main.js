@@ -1,3 +1,4 @@
+"use strict";
 var System_1 = require("./System");
 var Cpu_1 = require("./Cpu");
 //System.print((0x22FC >>8).toString(16));

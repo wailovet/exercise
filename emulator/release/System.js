@@ -1,3 +1,4 @@
+"use strict";
 var System = (function () {
     function System() {
     }
@@ -28,5 +29,5 @@ var System = (function () {
     };
     System.run_num = 0;
     return System;
-})();
+}());
 exports.System = System;

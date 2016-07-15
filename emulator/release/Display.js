@@ -1,3 +1,4 @@
+"use strict";
 var System_1 = require("./System");
 var Display = (function () {
     function Display() {
@@ -40,5 +41,5 @@ var Display = (function () {
         }, 1000 / 59);
     };
     return Display;
-})();
+}());
 exports.Display = Display;

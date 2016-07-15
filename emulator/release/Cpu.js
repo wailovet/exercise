@@ -1,3 +1,4 @@
+"use strict";
 var System_1 = require("./System");
 var Display_1 = require("./Display");
 var Cpu = (function () {
@@ -315,5 +316,5 @@ var Cpu = (function () {
     Cpu.y = 362436069;
     Cpu.z = 521288629;
     return Cpu;
-})();
+}());
 exports.Cpu = Cpu;
