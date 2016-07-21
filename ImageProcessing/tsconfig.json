@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": false,
+    "outFile": "release/ip.js"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

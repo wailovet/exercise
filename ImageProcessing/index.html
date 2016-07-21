@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/zepto.min.js"></script>
+    <script src="release/ip.js"></script>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/??sm.min.css,sm-extend.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js'
+            charset='utf-8'></script>
+    <title>Title</title>
+</head>
+
+<body>
+<div class="page">
+    <canvas style="width: 100%"></canvas>
+    <div style="padding: 20px;">
+        <p><a href="javascript:(function () {})()" id="open" class="button button-fill">打开图片</a></p>
+        <input type="file" accept="image/*" id="selectImage" style="display: none"/>
+    </div>
+</div>
+<script src="release/plugins.js"></script>
+<script>
+    $('#open').on('touchend',function(e){
+        $('#selectImage').click();
+    })
+
+
+</script>
+</body>
+
+</html>
