@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;margin: 0;">
+<head>
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="js/zepto.min.js"></script>
+    <script src="js/hammer.min.js"></script>
+    <script src="dist/pui.js"></script>
+    <link rel="stylesheet" href="css/pui.css">
+    <title>demo</title>
+</head>
+
+<body style="height: 100%;margin: 0;">
+
+<select name="" id="" class="paddling-vertical">
+    <option value="">1</option>
+    <option value="">2</option>
+    <option value="">3</option>
+</select>
+<div class="paddling-vertical-substitute">
+    <p>测试</p>
+    <p>测试</p>
+</div>
+</body>
+<script>
+    //    var hammertime = new Hammer(window.document.body, {});
+    //    hammertime.on('pan', function (ev) {
+    //        console.log(ev);
+    //    });
+
+
+    PaddlingUi.init($("body"));
+</script>
+</html>

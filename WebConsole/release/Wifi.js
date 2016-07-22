@@ -1,3 +1,4 @@
+"use strict";
 ///<reference path="../d.ts/node-0.10.d.ts"/>
 var child_process_1 = require("child_process");
 var Ats_1 = require("./Ats");

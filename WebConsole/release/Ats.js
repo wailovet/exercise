@@ -1,3 +1,4 @@
+"use strict";
 var _Ats = (function () {
     function _Ats() {
         this.fcs = [];
@@ -16,7 +17,7 @@ var _Ats = (function () {
             fc.apply(this, args);
     };
     return _Ats;
-})();
+}());
 function Ats(func) {
     var ats = new _Ats();
     func(ats);

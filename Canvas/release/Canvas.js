@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Base = (function () {
     function Base() {
         this.style = {
@@ -14,7 +19,7 @@ var Base = (function () {
         };
     }
     return Base;
-})();
+}());
 var Canvas = (function () {
     function Canvas(canvas) {
         this.update_id = 0;
@@ -71,7 +76,7 @@ var Canvas = (function () {
         ctx.stroke();
     };
     return Canvas;
-})();
+}());
 var DoubleBufferedCanvas = (function () {
     function DoubleBufferedCanvas(canvas) {
         var _this = this;
@@ -129,12 +134,7 @@ var DoubleBufferedCanvas = (function () {
         return ret;
     };
     return DoubleBufferedCanvas;
-})();
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+}());
 var Line = (function (_super) {
     __extends(Line, _super);
     function Line(start_point, end_point) {
@@ -243,14 +243,14 @@ var Line = (function (_super) {
         });
     };
     return Line;
-})(Base);
+}(Base));
 var Point = (function () {
     function Point(x, y) {
         this.x = x;
         this.y = y;
     }
     return Point;
-})();
+}());
 /**
  * Created by Administrator on 2016/6/17.
  */
@@ -276,4 +276,4 @@ var System = (function () {
     System.y = 362436069;
     System.z = 521288629;
     return System;
-})();
+}());
