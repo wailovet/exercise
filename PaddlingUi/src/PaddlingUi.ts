@@ -17,6 +17,13 @@ class PaddlingUi {
     }
 
     public pan() {
+
+        let html = ' <div class="paddling-vertical-substitute"> \
+                                <p class="paddling-vertical-substitute-active"></p>\
+                            </div>';
+        this.node.append(html);
+
+
         var vertical_pan_view = new VerticalPanView(this);
         var is_start = false;
 
